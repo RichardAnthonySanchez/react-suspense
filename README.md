@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# React 19 Suspense Improvements - Testing Guide
 
-## Getting Started
+**Status:** 🚧 Work in Progress - Testing Suspense fallback behavior and skeleton loaders
 
-First, run the development server:
+## Overview
+
+This project tests the improved Suspense behavior in React 19, focusing on how fallbacks render faster while still warming up lazy data requests in the background. I'm using JSONPlaceholder as our test data source to demonstrate skeleton loader patterns and smooth content loading transitions.
+
+## What's Different in React 19?
+
+### Before React 19
+
+- When a component suspended, siblings would render first
+- Then the fallback would commit to the DOM
+- This caused unnecessary rendering work
+
+### React 19 Improvements
+
+- Fallback commits **immediately** without waiting for siblings to render
+- After fallback commits, React schedules another render to "pre-warm" lazy requests in siblings
+- Users see loading states faster
+- Better performance and perceived responsiveness
+
+## Project Goals
+
+- [x] Set up React 19 project with Suspense boundaries
+- [ ] Build skeleton loader component (fast, lightweight)
+- [ ] Create data fetching component with JSONPlaceholder
+- [ ] Test different suspend scenarios
+- [ ] Measure performance improvements
+- [ ] Document best practices for Suspense in React 19
+
+## Setup
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `react@^19.0.0` - React with Suspense improvements
+- `react-dom@^19.0.0` - DOM rendering
+- JSONPlaceholder - Free fake API for testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture
 
-## Learn More
+### Components
 
-To learn more about Next.js, take a look at the following resources:
+**Skeleton Loader**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Lightweight placeholder that renders immediately
+- CSS-based shimmer animation for perceived loading
+- Adapts to content shape (post list, user card, comment thread)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Data Fetcher**
 
-## Deploy on Vercel
+- Wraps async data operations (JSONPlaceholder API calls)
+- Throws promise during data fetch (Suspense integration)
+- Resolves to component with real data when ready
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Suspense Boundary**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Wraps fetchable components
+- Shows skeleton loader as fallback
+- Manages transition from fallback to real content
+
+### Data Flow
+
+```
+User Action
+    ↓
+Suspense Boundary shows Skeleton Loader (immediately)
+    ↓
+React pre-warms fetch in background
+    ↓
+Data resolves
+    ↓
+Content replaces skeleton (smooth transition)
+```
+
+## Performance Metrics to Track
+
+- [ ] Time to skeleton render (TTSR)
+- [ ] Time to content ready (TTR)
+- [ ] Perceived load time
+- [ ] Network waterfall chart
+- [ ] Re-render count
+
+## Resources
+
+- [React 19 Suspense Improvements](https://react.dev/blog/2024/04/25/react-19-upgrade-guide#improvements-to-suspense)
+- [use React API Documentation](https://react.dev/reference/react/use#streaming-data-from-server-to-client)
+- [Comprehensive Look At Server Component Performance by Nadia Makarevich](https://www.developerway.com/posts/react-server-components-performance)
+- [The Progression of Fetching Data in React by ByteGrad](https://youtu.be/bKm1rNaCFOo?si=OgmS2Z8NhH-Zhxcd)
+- [More Shootouts with Suspense by Jack Herrington](https://youtu.be/sgnw8dRZa3Q?si=uoCXvcyHzoCxUKrE)
+- [JSONPlaceholder API](https://jsonplaceholder.typicode.com/)
