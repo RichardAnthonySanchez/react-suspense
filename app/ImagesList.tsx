@@ -28,6 +28,7 @@ export default function ImagesList({ imagesPromise }) {
           width={800}
           height={400}
           className="rounded-md border-2 border-gray-200"
+          loading="eager"
         />
         <button
           onClick={prevSlide}

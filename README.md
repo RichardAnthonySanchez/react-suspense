@@ -24,8 +24,8 @@ This project tests the improved Suspense behavior in React 19, focusing on how f
 ## Project Goals
 
 - [x] Set up React 19 project with Suspense boundaries
-- [ ] Build skeleton loader component (fast, lightweight)
-- [ ] Create data fetching component with JSONPlaceholder
+- [x] Build skeleton loader component (fast, lightweight)
+- [x] Create data fetching component with JSONPlaceholder
 - [ ] Test different suspend scenarios
 - [ ] Measure performance improvements
 - [ ] Document best practices for Suspense in React 19
