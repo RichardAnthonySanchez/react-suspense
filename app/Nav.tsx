@@ -2,7 +2,7 @@ export default function Nav() {
   return (
     <nav className="mb-4">
       <h1 className="text-5xl font-extrabold text-center mb-6 text-gray-600 text-shadow-lg">
-        React Suspense Improvements
+        React Fetch Performance
       </h1>
       <ul className="flex flex-row justify-center mb-6">
         <li>

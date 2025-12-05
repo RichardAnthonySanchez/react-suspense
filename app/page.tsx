@@ -6,6 +6,7 @@ import CommentsList from "./CommentsList";
 import Nav from "./Nav";
 import { ErrorBoundary } from "react-error-boundary";
 import ImagesList from "./ImagesList";
+import Banner from "./Banner";
 
 export default function Page() {
   const commentsPromise = getComments();
@@ -14,6 +15,7 @@ export default function Page() {
   return (
     <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
       <Nav />
+      <Banner />
       <Suspense fallback={<CommentsSkeleton />}>
         <ImagesList imagesPromise={imagesPromise} />
         <CommentsList commentsPromise={commentsPromise} />
