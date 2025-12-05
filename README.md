@@ -1,10 +1,10 @@
 # React 19 Suspense Improvements - Testing Guide
 
-**Status:** 🚧 Work in Progress - Testing Suspense fallback behavior and skeleton loaders
+**Status:** 🚧 Work in Progress - Testing behavior and performance improvements.
 
 ## Overview
 
-This project tests the improved Suspense behavior in React 19, focusing on how fallbacks render faster while still warming up lazy data requests in the background. I'm using JSONPlaceholder as our test data source to demonstrate skeleton loader patterns and smooth content loading transitions.
+This project tests the improved Suspense behavior in React 19, focusing on how fallbacks render faster while still warming up lazy data requests in the background. I'm using JSONPlaceholder & Picsum as our test data source to demonstrate skeleton loader patterns and smooth content loading transitions.
 
 ## What's Different in React 19?
 
@@ -19,14 +19,14 @@ This project tests the improved Suspense behavior in React 19, focusing on how f
 - Fallback commits **immediately** without waiting for siblings to render
 - After fallback commits, React schedules another render to "pre-warm" lazy requests in siblings
 - Users see loading states faster
-- Better performance and perceived responsiveness
+- Better performance and _perceived_ responsiveness
 
 ## Project Goals
 
 - [x] Set up React 19 project with Suspense boundaries
 - [x] Build skeleton loader component (fast, lightweight)
-- [x] Create data fetching component with JSONPlaceholder
-- [ ] Test different suspend scenarios
+- [x] Create data fetching component with JSONPlaceholder & Picsum
+- [x] Test different suspend scenarios
 - [ ] Measure performance improvements
 - [ ] Document best practices for Suspense in React 19
 
@@ -40,9 +40,9 @@ npm install
 
 ### Dependencies
 
-- `react@^19.0.0` - React with Suspense improvements
-- `react-dom@^19.0.0` - DOM rendering
-- JSONPlaceholder - Free fake API for testing
+- `react@^19.2.0` - React with Suspense improvements
+- `react-dom@^19.2.0` - DOM rendering
+- JSONPlaceholder & Picsum - Free fake API for testing
 
 ## Architecture
 
@@ -56,7 +56,7 @@ npm install
 
 **Data Fetcher**
 
-- Wraps async data operations (JSONPlaceholder API calls)
+- Wraps async data operations (JSONPlaceholder & Picsum API calls)
 - Throws promise during data fetch (Suspense integration)
 - Resolves to component with real data when ready
 
@@ -95,4 +95,5 @@ Content replaces skeleton (smooth transition)
 - [Comprehensive Look At Server Component Performance by Nadia Makarevich](https://www.developerway.com/posts/react-server-components-performance)
 - [The Progression of Fetching Data in React by ByteGrad](https://youtu.be/bKm1rNaCFOo?si=OgmS2Z8NhH-Zhxcd)
 - [More Shootouts with Suspense by Jack Herrington](https://youtu.be/sgnw8dRZa3Q?si=uoCXvcyHzoCxUKrE)
-- [JSONPlaceholder API](https://jsonplaceholder.typicode.com/)
+- [JSONPlaceholder API](https://JSONPlaceholder.typicode.com/)
+- [Picsum API](https://picsum.photos/)

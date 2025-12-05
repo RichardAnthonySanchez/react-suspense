@@ -8,21 +8,21 @@ export default function Nav() {
         <li>
           <a
             className="mx-4 bg-gray-300 rounded-2xl text-gray-600 font-bold p-4 border-2 border-gray-400"
-            href="#"
+            href="./"
           >
-            Test 1
+            Server Fetching using Suspense
           </a>
           <a
             className="mx-4 bg-gray-300 rounded-2xl text-gray-600 font-bold p-4 border-2 border-gray-400"
-            href="#"
+            href="./use-effect-test"
           >
-            Test 2
+            Client Fetching
           </a>
           <a
             className="mx-4 bg-gray-300 rounded-2xl text-gray-600 font-bold p-4 border-2 border-gray-400"
-            href="#"
+            href="./ssr-test"
           >
-            Test 3
+            Server Fetching
           </a>
         </li>
       </ul>
