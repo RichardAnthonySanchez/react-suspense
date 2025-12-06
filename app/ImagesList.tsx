@@ -3,7 +3,11 @@
 import { use, useState } from "react";
 import Image from "next/image";
 
-export default function ImagesList({ imagesPromise }) {
+export default function ImagesList({
+  imagesPromise,
+}: {
+  imagesPromise: Promise<{ download_url: string; author: string }[]>;
+}) {
   const images = use(imagesPromise).slice(0, 4);
   const [currentIndex, setCurrentIndex] = useState(0);
 

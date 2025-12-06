@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 
 export default function UeCommentsList() {
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState<
+    { id: number; name: string }[] | null
+  >(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -20,7 +22,11 @@ export default function UeCommentsList() {
         setComments(result);
         setError(null);
       } catch (err) {
-        setError(err.message);
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred.");
+        }
         setComments(null);
       } finally {
         setIsLoading(false);
@@ -40,14 +46,15 @@ export default function UeCommentsList() {
 
   return (
     <ul className="md:grid md:grid-cols-4 ">
-      {comments.slice(0, 24).map((c) => (
-        <li
-          className="card bg-gray-300 text-gray-700 rounded-md border-2 border-gray-400 p-4 m-2 "
-          key={c.id}
-        >
-          {c.name}
-        </li>
-      ))}
+      {comments &&
+        comments.slice(0, 24).map((c) => (
+          <li
+            className="card bg-gray-300 text-gray-700 rounded-md border-2 border-gray-400 p-4 m-2 "
+            key={c.id}
+          >
+            {c.name}
+          </li>
+        ))}
     </ul>
   );
 }
