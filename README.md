@@ -4,22 +4,23 @@
 
 ## Overview
 
-This project tests the improved Suspense behavior in React 19, focusing on how fallbacks render faster while still warming up lazy data requests in the background. I'm using JSONPlaceholder & Picsum as our test data source to demonstrate skeleton loader patterns and smooth content loading transitions.
+This test compares three common approaches to loading data in React/Next.js applications, each with different tradeoffs between initial page load speed, time to interactivity, and perceived performance.
 
-## What's Different in React 19?
+- **Client-Side Fetching**
+- **Server-Side Rendering**
+- **Server Rendering with Suspense & Streaming**
 
-### Before React 19
+The test evaluates which pattern best balances load time, interactivity, and user experience across different scenarios.
 
-- When a component suspended, siblings would render first
-- Then the fallback would commit to the DOM
-- This caused unnecessary rendering work
+## Quick Summary
 
-### React 19 Improvements
+| Pattern                         | Time to First Content               | Time to Interactivity | Best Use Case                     |
+| ------------------------------- | ----------------------------------- | --------------------- | --------------------------------- |
+| **useEffect Client Fetching**   | Medium (render UI then fetch)       | 3.1s / 900ms          | Internal tools, simple pages      |
+| **Server-Side Rendering**       | Slowest (blank screen to full page) | 4.6s / 1.4s           | SEO, complete data requirements   |
+| **Server + Suspense Streaming** | Fastest (perceived)                 | 3.8s / 800ms          | Public apps, user-facing products |
 
-- Fallback commits **immediately** without waiting for siblings to render
-- After fallback commits, React schedules another render to "pre-warm" lazy requests in siblings
-- Users see loading states faster
-- Better performance and _perceived_ responsiveness
+The streaming pattern with Suspense has become the modern best practice for Next.js applications because it optimizes for perceived performance—users see something immediately while the full content loads gracefully in the background.
 
 ## Project Goals
 
